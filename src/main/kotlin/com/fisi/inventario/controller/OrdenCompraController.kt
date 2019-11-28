@@ -30,13 +30,12 @@ class OrdenCompraController {
 	@Qualifier("kafkaService")
 	private val kafkaServicio: KafkaServicioImpl? = null
 
-	fun enviarMensaje(ordenCompraModel: OrdenCompraModel?) {
-		kafkaServicio!!.enviarMensaje(ordenCompraModel)
+	fun enviarMensaje(ordenCompraModel: OrdenCompraModel?, topico: String?) {
+		kafkaServicio!!.enviarMensaje(ordenCompraModel, topico)
 	}
 	
-
-	@KafkaListener(topics = ["validar"])
-	fun listenerKafka(ordenCompra: String?) {
+	@KafkaListener(topics = ["validar"], groupId = "va" )
+	fun listenerKafkaValidar(ordenCompra: String?) {
 		val ordenCompraModel = kafkaServicio!!.recibirMensaje(ordenCompra)		
 		
 		for (pos in 0 until ordenCompraModel!!.getlDetalleCompra()!!.count()) {
@@ -46,9 +45,15 @@ class OrdenCompraController {
 			if((ordenCompraDetalle.getnCantidadProducto() as Int) > (producto!!.getnCantidad()  as Int)){
 				ordenCompraDetalle.setbExistencia(false);
 			}
-			
 		}
 		
-		enviarMensaje(ordenCompraModel)		
+		enviarMensaje(ordenCompraModel, "inventario")		
 	}
+	
+	@KafkaListener(topics = ["comprar"], groupId = "co")
+	fun listenerKafkaCompra(ordenCompra: String?) {
+		val ordenCompraModel = kafkaServicio!!.recibirMensaje(ordenCompra)
+		enviarMensaje(ordenCompraModel, "reserva")		
+	}
+	
 }

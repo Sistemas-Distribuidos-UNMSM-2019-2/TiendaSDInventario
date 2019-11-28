@@ -20,7 +20,7 @@ import com.google.gson.Gson
 @Configuration
 @EnableKafka
 open class KafkaConfiguration {
-	@Value("\${kafka.host:192.168.4.5}")
+	@Value("\${kafka.host:192.168.4.27}")
     private val host: String? = null
 
     @Value("\${kafka.port:9092}")
@@ -46,7 +46,7 @@ open class KafkaConfiguration {
         props[ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG] = "$host:$port"
         props[ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG] = StringDeserializer::class.java
         props[ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG] = StringDeserializer::class.java
-        props[ConsumerConfig.GROUP_ID_CONFIG] = "myGroupId2"
+        //props[ConsumerConfig.GROUP_ID_CONFIG] = "myGroupId2"
 
         return props
     }

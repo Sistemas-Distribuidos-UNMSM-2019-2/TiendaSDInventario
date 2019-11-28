@@ -15,8 +15,8 @@ class KafkaServicioImpl : KafkaServicio {
 	private val jsonConverter: Gson? = null
 
 	@Override
-	override fun enviarMensaje(ordenCompraModel: OrdenCompraModel?) {
-		kafkaTemplate!!.send("inventario", jsonConverter!!.toJson(ordenCompraModel))
+	override fun enviarMensaje(ordenCompraModel: OrdenCompraModel?, topico: String?) {
+		kafkaTemplate!!.send(topico as String, jsonConverter!!.toJson(ordenCompraModel))
 	}
 
 	@Override
