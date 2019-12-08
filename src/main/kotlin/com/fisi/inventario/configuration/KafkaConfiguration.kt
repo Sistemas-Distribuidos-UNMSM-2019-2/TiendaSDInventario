@@ -20,7 +20,7 @@ import com.google.gson.Gson
 @Configuration
 @EnableKafka
 open class KafkaConfiguration {
-	@Value("\${kafka.host:192.168.4.25}")
+	@Value("\${kafka.host:192.168.3.10}")
     private val host: String? = null
 
     @Value("\${kafka.port:9092}")

@@ -2,10 +2,14 @@ package com.fisi.inventario.model
 
 import java.util.Date
 
+import com.fasterxml.jackson.annotation.JsonFormat
+
 class OrdenCompraModel {
 	private var sRucCliente: String? = null
 	private var nPrecioTotal: Double? = 0.toDouble()
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy hh:mm:ss", timezone = JsonFormat.DEFAULT_TIMEZONE)
 	private var dFechaCompra: Date? = null
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy hh:mm:ss", timezone = JsonFormat.DEFAULT_TIMEZONE)
 	private var dFechaPago: Date? = null
 	private var lDetalleCompra: List<OrdenCompraDetalleModel?>? = null
 	
